@@ -28,3 +28,35 @@ export const registerUser = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error', errorMessage: error.message })
     }
 }
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'All fields are required'
+            })
+        }
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+        }
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (!isPasswordMatch) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid email or password'
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: `Welcome Back ${user.fullName}`
+        })
+    } catch (error) {
+        return res.status(500).json({ message: 'Internal server error', errorMessage: error.message })
+    }
+}
