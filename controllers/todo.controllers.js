@@ -26,3 +26,15 @@ export const createTodos = async (req, res) => {
     }
 
 }
+
+export const getTodos = async (req, res) => {
+    try {
+        const todos = await Todo.find();
+        return res.status(200).json({
+            success: true,
+            todos
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
