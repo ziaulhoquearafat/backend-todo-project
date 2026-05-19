@@ -15,7 +15,11 @@ export const createTodos = async (req, res) => {
         })
         return res.status(201).json({
             success: true,
-            message: 'Todo created successfully'
+            message: 'Todo created successfully',
+            data: {
+                title,
+                description
+            }
         })
     } catch (error) {
         console.log(error)
