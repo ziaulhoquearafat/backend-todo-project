@@ -43,10 +43,8 @@ export const updateTodo = async (req, res) => {
     try {
         const { todoId } = req.params;
         const { title, description } = req.body;
-        const todo = await Todo.findByIdAndUpdate(todoId, {
-            title,
-            description
-        }, { new: true })
+        const todo = await Todo.findByIdAndUpdate(todoId,
+            { title, description }, { new: true })
         return res.status(200).json({
             success: true,
             message: 'Todo Updated Successfully',
