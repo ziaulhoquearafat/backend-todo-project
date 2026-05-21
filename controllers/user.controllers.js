@@ -55,8 +55,9 @@ export const login = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
+        // save token in cookie
         return res.status(200).cookie('token', token, {
             httpOnly: true,
             sameSite: 'strict',
