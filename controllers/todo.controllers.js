@@ -27,12 +27,30 @@ export const createTodos = async (req, res) => {
 
 }
 
-export const getTodos = async (req, res) => {
+export const getAllTodos = async (req, res) => {
     try {
         const todos = await Todo.find();
         return res.status(200).json({
             success: true,
             todos
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateTodo = async (req, res) => {
+    try {
+        const { todoId } = req.params;
+        const { title, description } = req.body;
+        const todo = await Todo.findByIdAndUpdate(todoId, {
+            title,
+            description
+        }, { new: true })
+        return res.status(200).json({
+            success: true,
+            message: 'Todo Updated Successfully',
+            data: todo
         })
     } catch (error) {
         console.log(error)
