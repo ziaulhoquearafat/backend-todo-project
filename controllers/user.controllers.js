@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from "../models/user.model.js";
 
 export const registerUser = async (req, res) => {
@@ -52,9 +53,18 @@ export const login = async (req, res) => {
                 message: 'Invalid email or password'
             })
         }
-        return res.status(200).json({
+
+        // Generate JWT token
+        const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+
+        return res.status(200).cookie('token', token, {
+            httpOnly: true,
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000
+        }).json({
             success: true,
             message: `Welcome Back ${user.fullName}`
+
         })
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error', errorMessage: error.message })
