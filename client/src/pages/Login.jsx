@@ -36,8 +36,18 @@ const Login = () => {
   return (
     <div>
       <h1>Login Page</h1>
-      <Input type="email" placeholder="Email" onChange={handleChange} />
-      <Input type="password" placeholder="Password" onChange={handleChange} />
+      <Input
+        type="email"
+        name="email"
+        placeholder="Email"
+        onChange={handleChange}
+      />
+      <Input
+        type="password"
+        name="password"
+        placeholder="Password"
+        onChange={handleChange}
+      />
       <Button onClick={handleLogin}>Log In</Button>
     </div>
   );
