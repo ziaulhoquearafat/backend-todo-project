@@ -40,6 +40,7 @@ function App() {
         <Navbar />
         <div className="flex flex-col items-center justify-center mt-10 gap-4">
           <Input
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Add A New Todo"
@@ -47,6 +48,7 @@ function App() {
             className="w-1/3"
           />
           <Textarea
+            required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-1/3"
