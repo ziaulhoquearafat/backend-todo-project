@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -9,7 +10,7 @@ const Login = () => {
     password: "",
   });
 
-  const handleChange = (e) => {
+  const changeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -25,30 +26,43 @@ const Login = () => {
           withCredentials: true,
         },
       );
+      console.log(res);
       if (res.data.success) {
-        alert("Login Successful");
+        Swal.fire({
+          title: "Login Successful!",
+          icon: "success",
+          draggable: true,
+        });
       }
     } catch (error) {
+      Swal.fire({
+        title: "Login Failed!",
+        icon: "error",
+        draggable: true,
+      });
       console.log(error);
     }
   };
 
   return (
-    <div>
-      <h1>Login Page</h1>
+    <div className="space-y-5 max-w-7xl mx-auto p-15">
       <Input
-        type="email"
+        value={user.email}
+        onChange={changeHandler}
+        placeholder="Enter Email"
         name="email"
-        placeholder="Email"
-        onChange={handleChange}
+        type="email"
+        required
       />
       <Input
+        value={user.password}
+        onChange={changeHandler}
+        placeholder="Enter Password"
         type="password"
         name="password"
-        placeholder="Password"
-        onChange={handleChange}
+        required
       />
-      <Button onClick={handleLogin}>Log In</Button>
+      <Button onClick={handleLogin}>Login</Button>
     </div>
   );
 };

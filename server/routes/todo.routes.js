@@ -5,8 +5,8 @@ import isAuthenticated from '../middlewares/isAuthenticated.js';
 const router = express.Router();
 
 router.post('/', isAuthenticated, createTodos);
-router.get('/', getAllTodos);
+router.get('/', isAuthenticated, getAllTodos);
 router.put('/:todoId', isAuthenticated, updateTodo);
-router.delete('/:todoId', isAuthenticated, deleteTodo)
+router.delete('/:todoId', isAuthenticated, deleteTodo);
 
 export default router;
