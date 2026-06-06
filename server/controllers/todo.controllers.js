@@ -9,17 +9,14 @@ export const createTodos = async (req, res) => {
                 message: 'All fields are required'
             })
         }
-        await Todo.create({
+        const todo = await Todo.create({
             title,
             description
         })
         return res.status(201).json({
             success: true,
             message: 'Todo created successfully',
-            data: {
-                title,
-                description
-            }
+            todo
         })
     } catch (error) {
         console.log(error)
