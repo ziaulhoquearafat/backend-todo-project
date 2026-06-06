@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const Login = () => {
@@ -13,6 +14,8 @@ const Login = () => {
   const changeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -26,13 +29,13 @@ const Login = () => {
           withCredentials: true,
         },
       );
-      console.log(res);
       if (res.data.success) {
         Swal.fire({
           title: "Login Successful!",
           icon: "success",
           draggable: true,
         });
+        navigate("/");
       }
     } catch (error) {
       Swal.fire({
